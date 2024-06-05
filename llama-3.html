@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    RED.nodes.registerType("llama-3", {
+        category: "function",
+        color: "#00A4CC",
+        defaults: {
+            name: { value: "" },
+            server: { value: "" },
+            endpoint: { value: "" },
+            role: { value: "" },
+            prompt: { value: "" },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "icons/image.png",
+        label: function () {
+            return this.name || "llama-3";
+        },
+        oneditprepare: function () {
+            $("#node-input-endpoint").typedInput({
+                types: [
+                    {
+                        value: "endpoint",
+                        options: [
+                            { value: "/v1/chat/completions", label: "/v1/chat/completions" },
+                            { value: "/v1/completions", label: "/v1/completions" },
+                            { value: "/v1/embeddings", label: "/v1/embeddings" },
+                            { value: "/v1/models", label: "/v1/models" },
+                        ],
+                    },
+                ],
+            });
+
+            $("#node-input-prompt").typedInput({
+                type: "msg",
+                types: ["msg"],
+                typeField: "#node-input-prompt-type",
+            });
+        },
+    });
+</script>
+
+<script type="text/html" data-template-name="llama-3">
+  <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-server"><i></i> Server</label>
+      <input type="text" id="node-input-server" placeholder="http://localhost:8000">
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-name"></i> Endpoint</label>
+      <input type="text" id="node-input-endpoint">
+  </div>
+
+  <div class="form-row">
+          <label for="node-input-role"></i> Role</label>
+          <input type="text" id="node-input-role" placeholder="you are a helpful assistant">
+  </div>
+
+  <div class="form-row">
+          <label for="node-input-name"></i> Prompt</label>
+          <input type="text" id="node-input-prompt">
+          <input type="hidden" id="node-input-prompt-type">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="llama-3">
+  <p>
+    A simple node that converts the message payloads into all llama-3 characters
+  </p>
+</script>

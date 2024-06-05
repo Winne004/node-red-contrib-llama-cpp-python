@@ -1,0 +1,20 @@
+{
+  "name": "red-contrib-llama-node",
+  "version": "1.0.0",
+  "description": "Node-RED node for Llama-cpp server",
+  "main": "llama-3.js",
+  "scripts": {
+    "debug": "node $(readlink -f $(which node-red))"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2"
+  },
+  "node-red": {
+    "nodes": {
+      "llama3": "llama-3.js"
+    }
+  },
+  "devDependencies": {}
+}
