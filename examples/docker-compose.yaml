@@ -1,0 +1,35 @@
+################################################################################
+# Node-RED Stack or Compose
+################################################################################
+# docker stack deploy node-red --compose-file docker-compose-node-red.yml
+# docker-compose -f docker-compose-node-red.yml -p myNoderedProject up
+################################################################################
+version: "3.7"
+
+services:
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - "1880:1880"
+    networks:
+      - node-red-net
+    volumes:
+      - node-red-data:/data
+
+  llama_server:
+    image: llama_ccp_server
+    build: 
+      context: llama_ccp_python_server
+      dockerfile: ./llama_ccp_server.dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - node-red-net
+
+volumes:
+  node-red-data:
+
+networks:
+  node-red-net:
