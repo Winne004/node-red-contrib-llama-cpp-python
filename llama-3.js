@@ -1,28 +1,21 @@
-const axios = require("axios"); // If using ES Modules, consider using import axios from 'axios';
+const axios = require("axios");
 
 module.exports = function (RED) {
     function llama3Node(config) {
         RED.nodes.createNode(this, config);
         var node = this;
-        this.prompt = config.prompt;
-        this.server = config.server;
-        this.endpoint = config.endpoint;
-        this.role = config.role;
-
+        const API_URL = config.server.concat(config.endpoint);
+        const HEADERS = {
+            // Centralized headers
+            accept: "application/json",
+            "Content-Type": "application/json",
+        };
         node.on("input", function (msg) {
-            // Use async directly in the event handler
-
-            const API_URL = this.server.concat(this.endpoint); // Centralized API URL
-            const HEADERS = {
-                // Centralized headers
-                accept: "application/json",
-                "Content-Type": "application/json",
-            };
             const data = {
                 model: "gpt-3.5-turbo",
                 messages: [
-                    { role: "system", content: this.role },
-                    { role: "user", content: msg[this.prompt] },
+                    { role: "system", content: config.role },
+                    { role: "user", content: msg[config.prompt] },
                 ],
             };
             axios
